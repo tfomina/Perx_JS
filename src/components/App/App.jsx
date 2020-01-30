@@ -1,3 +1,4 @@
 import React from "react";
+import { Layout } from "./../Layout";
 
-export const App = () => <div>Main page</div>;
+export const App = () => <Layout>Main Page</Layout>;
