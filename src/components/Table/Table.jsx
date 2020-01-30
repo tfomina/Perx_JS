@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const Table = ({ data }) => (
-  <table class="table table-striped table-bordered">
-    <thead class="thead-dark">
+  <table className="table table-striped table-bordered">
+    <thead className="thead-dark">
       <tr>
         <th scope="col">VIN</th>
         <th scope="col">Brand</th>
@@ -14,12 +14,14 @@ export const Table = ({ data }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map(i => (
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+      {data.map(item => (
+        <tr key={item.id}>
+          <th scope="row">{item.vin}</th>
+          <td>{item.brand}</td>
+          <td>{item.model}</td>
+          <td>{item.grade}</td>
+          <td>---</td>
+          <td>---</td>
         </tr>
       ))}
     </tbody>
