@@ -9,20 +9,20 @@ const PER_PAGE = 10;
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_CARS_PENDING":
+    case "FETCH_PENDING":
       return {
         ...state,
         isLoading: true,
         isError: false
       };
-    case "FETCH_CARS_SUCCESS":
+    case "FETCH_SUCCESS":
       return {
         ...state,
         isLoading: false,
         isError: false,
         data: action.payload
       };
-    case "FETCH_CARS_FAILURE":
+    case "FETCH_FAILURE":
       return {
         ...state,
         isLoading: false,
@@ -41,24 +41,42 @@ const useDataApi = (initialUrl, initialData) => {
     data: initialData
   });
 
+  const fetchDealers = async dealerIds => {
+    return await axios(
+      `https://jlrc.dev.perx.ru/carstock/api/v1/dealers/?id__in=${dealerIds}`
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_CARS_PENDING" });
+      dispatch({ type: "FETCH_PENDING" });
       try {
-        const result = await axios(url, {
+        const carResult = await axios(url, {
           headers: {
             "X-CS-Dealer-Id-Only": 1
           }
         });
+        const dealerIds = (carResult.data || []).map(i => i.dealer);
+        const uniqueSet = new Set(dealerIds);
+        const uniqueDealerIds = [...uniqueSet];
+        const uniqueDealerIdsString = uniqueDealerIds.join();
+
+        const dealerResult = await fetchDealers(uniqueDealerIdsString);
+
+        const cars = carResult.data.map(c => ({
+          ...c,
+          dealerInfo: dealerResult.data.find(d => c.dealer === d.id)
+        }));
+
         dispatch({
-          type: "FETCH_CARS_SUCCESS",
+          type: "FETCH_SUCCESS",
           payload: {
-            cars: result.data,
-            total: result.headers["x-total-count"]
+            cars: cars,
+            total: carResult.headers["x-total-count"]
           }
         });
       } catch (error) {
-        dispatch({ type: "FETCH_CARS_FAILURE" });
+        dispatch({ type: "FETCH_FAILURE" });
       }
     };
     fetchData();
@@ -68,12 +86,12 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 export const App = () => {
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [
     { data, isLoading, isError },
     doFetch
   ] = useDataApi(
-    `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${page}&per_page=${PER_PAGE}`,
+    `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${PER_PAGE}`,
     { cars: [], total: 0 }
   );
 
@@ -86,7 +104,7 @@ export const App = () => {
       ) : (
         <>
           <Table data={data.cars} />
-          <Pagination />
+          <Pagination currentPage={currentPage} total={data.total} />
         </>
       )}
     </Layout>
