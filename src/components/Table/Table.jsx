@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Table from "react-bootstrap/Table";
 import { DealerAdressList } from "./DealerAdressList";
 
-export const Table = ({ data = [] }) => (
+export const CarTable = ({ data = [] }) => (
   <>
     {data && data.length ? (
-      <table className="table table-striped table-bordered">
+      <Table striped bordered>
         <thead className="thead-dark">
           <tr>
             <th scope="col">VIN</th>
@@ -30,7 +31,7 @@ export const Table = ({ data = [] }) => (
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     ) : (
       ""
     )}

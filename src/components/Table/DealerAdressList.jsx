@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export const DealerAdressList = ({ data = [] }) => (
   <>
     {data && data.length ? (
-      <ul className="list-group list-group-flush">
+      <ListGroup variant="flush">
         {data.map(i => (
-          <li className="list-group-item bg-transparent" key={i.id}>
+          <ListGroup.Item className="bg-transparent" key={i.id}>
             {i.address}
-          </li>
+          </ListGroup.Item>
         ))}
-      </ul>
+      </ListGroup>
     ) : (
       ""
     )}

@@ -1,33 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
+import Pagination from "react-pagination-bootstrap";
 
-export const Pagination = () => (
-  <nav aria-label="Page navigation example">
-    <ul className="pagination justify-content-center">
-      <li className="page-item disabled">
-        <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">
-          Previous
-        </a>
-      </li>
-      <li className="page-item">
-        <a className="page-link" href="#">
-          1
-        </a>
-      </li>
-      <li className="page-item">
-        <a className="page-link" href="#">
-          2
-        </a>
-      </li>
-      <li className="page-item">
-        <a className="page-link" href="#">
-          3
-        </a>
-      </li>
-      <li className="page-item">
-        <a className="page-link" href="#">
-          Next
-        </a>
-      </li>
-    </ul>
-  </nav>
+export const CarPagination = ({
+  currentPage,
+  itemsPerPage,
+  total,
+  handlePageChange
+}) => (
+  <div className="d-flex justify-content-center">
+    <Pagination
+      activePage={currentPage}
+      itemsCountPerPage={itemsPerPage}
+      totalItemsCount={total}
+      pageRangeDisplayed={5}
+      onChange={pageNumber => {
+        handlePageChange(pageNumber);
+      }}
+    />
+  </div>
 );
+
+CarPagination.propTypes = {
+  currentPage: PropTypes.number,
+  total: PropTypes.number,
+  itemsPerPage: PropTypes.number,
+  handlePageChange: PropTypes.func
+};

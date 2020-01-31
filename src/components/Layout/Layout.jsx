@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Container from "react-bootstrap/Container";
 
 export const Layout = props => {
   return (
-    <div className="container">
-      <h1 className="py-2">Машинки</h1>
-      {props.children}
-    </div>
+    <Container className="pb-4">
+      <h1 className="py-3">Машинки</h1>
+      <main>{props.children}</main>
+    </Container>
   );
 };
 

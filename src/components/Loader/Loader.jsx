@@ -1,9 +1,10 @@
 import React from "react";
+import Spinner from "react-bootstrap/Spinner";
 
 export const Loader = () => (
   <div className="d-flex justify-content-center">
-    <div className="spinner-border text-primary" role="status">
+    <Spinner animation="border" role="status" variant="primary">
       <span className="sr-only">Loading...</span>
-    </div>
+    </Spinner>
   </div>
 );

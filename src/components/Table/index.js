@@ -1,1 +1,1 @@
-export { Table } from "./Table";
+export { CarTable } from "./Table";

@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import { Layout } from "./../Layout";
-import { Table } from "./../Table";
-import { Pagination } from "./../Pagination";
+import { CarTable as Table } from "./../Table";
+import { CarPagination as Pagination } from "./../Pagination";
 import { Loader } from "./../Loader";
 
-const PER_PAGE = 10;
+const ITEMS_PER_PAGE = 10;
+const INITIAL_DATA = { cars: [], total: 0 };
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
@@ -26,7 +27,8 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
-        isError: true
+        isError: true,
+        data: INITIAL_DATA
       };
     default:
       throw new Error();
@@ -87,13 +89,17 @@ const useDataApi = (initialUrl, initialData) => {
 
 export const App = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [
-    { data, isLoading, isError },
-    doFetch
-  ] = useDataApi(
-    `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${PER_PAGE}`,
-    { cars: [], total: 0 }
+  const [{ data, isLoading, isError }, doFetch] = useDataApi(
+    `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${ITEMS_PER_PAGE}`,
+    INITIAL_DATA
   );
+
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber - 1);
+    doFetch(
+      `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${pageNumber}&per_page=${ITEMS_PER_PAGE}`
+    );
+  };
 
   return (
     <Layout>
@@ -104,7 +110,12 @@ export const App = () => {
       ) : (
         <>
           <Table data={data.cars} />
-          <Pagination currentPage={currentPage} total={data.total} />
+          <Pagination
+            currentPage={currentPage + 1}
+            total={+data.total}
+            itemsPerPage={ITEMS_PER_PAGE}
+            handlePageChange={handlePageChange}
+          />
         </>
       )}
     </Layout>
