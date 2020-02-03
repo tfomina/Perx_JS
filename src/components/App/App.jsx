@@ -88,14 +88,14 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 export const App = () => {
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
     `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${ITEMS_PER_PAGE}`,
     INITIAL_DATA
   );
 
   const handlePageChange = pageNumber => {
-    setCurrentPage(pageNumber - 1);
+    setCurrentPage(pageNumber);
     doFetch(
       `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${pageNumber}&per_page=${ITEMS_PER_PAGE}`
     );
@@ -111,7 +111,7 @@ export const App = () => {
         <>
           <Table data={data.cars} />
           <Pagination
-            currentPage={currentPage + 1}
+            currentPage={currentPage}
             total={+data.total}
             itemsPerPage={ITEMS_PER_PAGE}
             handlePageChange={handlePageChange}
