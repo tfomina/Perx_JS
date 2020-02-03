@@ -33,7 +33,7 @@ export const CarTable = ({ data = [] }) => (
         </tbody>
       </Table>
     ) : (
-      ""
+      "Ничего не найдено"
     )}
   </>
 );
