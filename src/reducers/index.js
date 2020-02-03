@@ -30,7 +30,7 @@ export function reducers(state = initialState, action) {
         ...state,
         isLoading: false,
         isError: true,
-        data: INITIAL_DATA
+        data: null
       };
 
     default:

@@ -26,9 +26,9 @@ export const App = () => {
     <Layout>
       {isError && <div>Что-то пошло не так...</div>}
 
-      {isLoading ? (
-        <Loader />
-      ) : (
+      {isLoading && <Loader />}
+
+      {data && (
         <>
           <Table data={data.cars} />
           <Pagination
