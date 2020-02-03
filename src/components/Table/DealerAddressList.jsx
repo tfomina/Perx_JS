@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ListGroup from "react-bootstrap/ListGroup";
 
-export const DealerAdressList = ({ data = [] }) => (
+export const DealerAddressList = ({ data = [] }) => (
   <>
     {data && data.length ? (
       <ListGroup variant="flush">
@@ -18,6 +18,6 @@ export const DealerAdressList = ({ data = [] }) => (
   </>
 );
 
-DealerAdressList.propTypes = {
+DealerAddressList.propTypes = {
   data: PropTypes.array
 };

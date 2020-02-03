@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Table from "react-bootstrap/Table";
-import { DealerAdressList } from "./DealerAdressList";
+import { DealerAddressList } from "./DealerAddressList";
 
 export const CarTable = ({ data = [] }) => (
   <>
@@ -26,7 +26,7 @@ export const CarTable = ({ data = [] }) => (
               <td>{item.grade}</td>
               <td>{item.dealerInfo.name}</td>
               <td>
-                <DealerAdressList data={item.dealerInfo.offices} />
+                <DealerAddressList data={item.dealerInfo.offices} />
               </td>
             </tr>
           ))}
