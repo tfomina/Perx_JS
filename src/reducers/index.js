@@ -1,11 +1,9 @@
 import { APP_ACTIONS } from "./../constants";
 
-const INITIAL_DATA = { cars: [], total: 0 };
-
 const initialState = {
   isLoading: false,
   isError: true,
-  data: INITIAL_DATA
+  data: null
 };
 
 export function reducers(state = initialState, action) {
@@ -14,7 +12,8 @@ export function reducers(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        isError: false
+        isError: false,
+        data: null
       };
 
     case APP_ACTIONS.FETCH_SUCCESS:
