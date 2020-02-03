@@ -6,7 +6,6 @@ import { CarPagination as Pagination } from "./../Pagination";
 import { Loader } from "./../Loader";
 
 const ITEMS_PER_PAGE = 10;
-const INITIAL_DATA = { cars: [], total: 0 };
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
@@ -14,7 +13,8 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
-        isError: false
+        isError: false,
+        data: null
       };
     case "FETCH_SUCCESS":
       return {
@@ -28,7 +28,7 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: INITIAL_DATA
+        data: null
       };
     default:
       throw new Error();
@@ -91,7 +91,7 @@ export const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
     `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${ITEMS_PER_PAGE}`,
-    INITIAL_DATA
+    null
   );
 
   const handlePageChange = pageNumber => {
@@ -105,9 +105,9 @@ export const App = () => {
     <Layout>
       {isError && <div>Что-то пошло не так...</div>}
 
-      {isLoading ? (
-        <Loader />
-      ) : (
+      {isLoading && <Loader />}
+
+      {data && (
         <>
           <Table data={data.cars} />
           <Pagination
