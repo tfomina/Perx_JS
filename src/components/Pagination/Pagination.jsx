@@ -10,12 +10,12 @@ export const CarPagination = ({
 }) => (
   <div className="d-flex justify-content-center">
     <Pagination
-      activePage={currentPage}
+      activePage={currentPage + 1}
       itemsCountPerPage={itemsPerPage}
       totalItemsCount={total}
       pageRangeDisplayed={5}
       onChange={pageNumber => {
-        handlePageChange(pageNumber);
+        handlePageChange(pageNumber - 1);
       }}
     />
   </div>

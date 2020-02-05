@@ -12,7 +12,7 @@ export const App = () => {
   const { data, isLoading, isError } = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     dispatch(fetch(currentPage, ITEMS_PER_PAGE));
