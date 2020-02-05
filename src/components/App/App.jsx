@@ -88,7 +88,7 @@ const useDataApi = (initialUrl, initialData) => {
 };
 
 export const App = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
     `https://jlrc.dev.perx.ru/carstock/api/v1/vehicles/?state=active&hidden=false&group=new&page=${currentPage}&per_page=${ITEMS_PER_PAGE}`,
     null
