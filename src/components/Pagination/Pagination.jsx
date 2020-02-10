@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Pagination from "react-pagination-bootstrap";
 
 export const CarPagination = ({
-  currentPage,
+  currentPage = 0,
   itemsPerPage,
   total,
   handlePageChange
