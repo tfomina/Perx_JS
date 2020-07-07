@@ -1,4 +1,4 @@
-# Perx_JS
+# Autos App
 
 В master ветке лежит вариант с использованием хука useReducer,
 
